@@ -1,9 +1,14 @@
+/* eslint-disable no-console */
 const express = require('express');
+
+const { sayHello, uppercase, lowercase, firstCharacters } = require('./lib/strings');
+const { add, subtract, multiply, divide } = require('./lib/numbers');
 
 const app = express();
 
-const { sayHello, uppercase, lowercase, firstCharacters } = require('./lib/strings');
-const { add, subtract, multiply } = require('./lib/numbers');
+app.use(express.json());
+
+// Strings
 
 app.get('/strings/hello/:string', (req, res) => {
   res.status(200).json({ result: sayHello(req.params.string) });
@@ -29,6 +34,12 @@ app.get('/strings/first-characters/:id', (req, res) => {
   }
 });
 
+/* app.get('/strings/hello/turtle', (req, res) => {
+  res.status(200).json({ result: 'Hello, turtle!' });
+});n */
+
+// Numbers
+
 app.get('/numbers/add/:a/and/:b', (req, res) => {
   const a = parseInt(req.params.a);
   const b = parseInt(req.params.b);
@@ -41,7 +52,9 @@ app.get('/numbers/add/:a/and/:b', (req, res) => {
 });
 
 app.get('/numbers/subtract/:a/from/:b', (req, res) => {
+  // eslint-disable-next-line radix
   const a = parseInt(req.params.a);
+  // eslint-disable-next-line radix
   const b = parseInt(req.params.b);
   if (isNaN(a) !== true && isNaN(b) !== true) {
     res.status(200).json({ result: subtract(b, a) });
@@ -50,8 +63,26 @@ app.get('/numbers/subtract/:a/from/:b', (req, res) => {
   }
 });
 
-/* app.get('/strings/hello/turtle', (req, res) => {
-  res.status(200).json({ result: 'Hello, turtle!' });
-});n */
+app.post('/numbers/multiply', (req, res) => {
+  if (typeof req.body.a === 'undefined' || typeof req.body.b === 'undefined') {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } else if (isNaN(req.body.a) === false && isNaN(req.body.b) === false) {
+    res.status(200).json({ result: multiply(req.body.a, req.body.b) });
+  } else {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+});
+
+app.post('/numbers/divide', (req, res) => {
+  if (typeof req.body.a === 'undefined' || typeof req.body.b === 'undefined') {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } /* else if {
+
+  } */ else if (isNaN(req.body.a) === false && isNaN(req.body.b) === false) {
+    res.status(200).json({ result: divide(req.body.a, req.body.b) });
+  } else {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+});
 
 module.exports = app;
