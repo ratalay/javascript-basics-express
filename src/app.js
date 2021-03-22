@@ -2,7 +2,7 @@
 const express = require('express');
 
 const { sayHello, uppercase, lowercase, firstCharacters } = require('./lib/strings');
-const { add, subtract, multiply, divide } = require('./lib/numbers');
+const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
 
 const app = express();
 
@@ -76,12 +76,26 @@ app.post('/numbers/multiply', (req, res) => {
 app.post('/numbers/divide', (req, res) => {
   if (typeof req.body.a === 'undefined' || typeof req.body.b === 'undefined') {
     res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } /* else if {
-
-  } */ else if (isNaN(req.body.a) === false && isNaN(req.body.b) === false) {
+  } else if (req.body.a === 0) {
+    res.status(200).json({ result: 0 });
+  } else if (req.body.b === 0) {
+    res.status(400).json({ error: 'Unable to divide by 0.' });
+  } else if (isNaN(req.body.a) === false && isNaN(req.body.b) === false) {
     res.status(200).json({ result: divide(req.body.a, req.body.b) });
   } else {
     res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+});
+
+app.post('/numbers/remainder', (req, res) => {
+  if (req.body.b === 0) {
+    res.status(400).json({ error: 'Unable to divide by 0.' });
+  } else if (typeof req.body.a === 'undefined' || typeof req.body.b === 'undefined') {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  } else if (isNaN(req.body.a) === false && isNaN(req.body.b) === false) {
+    res.status(200).json({ result: remainder(req.body.a, req.body.b) });
+  } else {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
   }
 });
 
