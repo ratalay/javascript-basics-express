@@ -3,6 +3,7 @@ const express = require('express');
 
 const { sayHello, uppercase, lowercase, firstCharacters } = require('./lib/strings');
 const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
+const { negate, truthiness, isOdd } = require('./lib/booleans');
 
 const app = express();
 
@@ -99,4 +100,17 @@ app.post('/numbers/remainder', (req, res) => {
   }
 });
 
+// Booleans
+
+app.post('/booleans/negate', (req, res) => {
+  res.status(200).json({ result: negate(req.body.value) });
+});
+
+app.post('/booleans/truthiness', (req, res) => {
+  res.status(200).json({ result: truthiness(req.body.value) });
+});
+
+app.get('/booleans/is-odd/:a', (req, res) => {
+  res.status(200).json({ result: isOdd(req.params.a) });
+});
 module.exports = app;
