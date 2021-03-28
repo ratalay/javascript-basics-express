@@ -45,7 +45,7 @@ describe('/arrays', () => {
   });
 
   describe('POST /starts-with-vowel', () => {
-    xit('returns a filtered array of elements starting with a vowel', done => {
+    it('returns a filtered array of elements starting with a vowel', done => {
       request(app)
         .post('/arrays/starts-with-vowel')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })
@@ -58,18 +58,19 @@ describe('/arrays', () => {
   });
 
   describe('POST /remove-element?index={index}', () => {
-    xit('returns an array with the first element removed', done => {
+    it('returns an array with the first element removed', done => {
       request(app)
         .post('/arrays/remove-element')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })
         .then(res => {
+          console.log(res.body);
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: ['dog', 'elephant', 'fox'] });
           done();
         });
     });
 
-    xit('returns an array with the element at the given index removed', done => {
+    it('returns an array with the element at the given index removed', done => {
       request(app)
         .post('/arrays/remove-element')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })

@@ -4,7 +4,13 @@ const express = require('express');
 const { sayHello, uppercase, lowercase, firstCharacters } = require('./lib/strings');
 const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
 const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
-const { getNthElement, arrayToCSVString, addToArray2 } = require('./lib/arrays');
+const {
+  getNthElement,
+  arrayToCSVString,
+  addToArray2,
+  elementsStartingWithAVowel,
+  removeNthElement,
+} = require('./lib/arrays');
 
 const app = express();
 
@@ -137,6 +143,14 @@ app.post('/arrays/to-string', (req, res) => {
 
 app.post('/arrays/append', (req, res) => {
   res.status(200).json({ result: addToArray2(req.body.value, req.body.array) });
+});
+
+app.post('/arrays/starts-with-vowel', (req, res) => {
+  res.status(200).json({ result: elementsStartingWithAVowel(req.body.array) });
+});
+
+app.post('/arrays/remove-element', (req, res) => {
+  res.status(200).json({ result: removeNthElement(req.query.index, req.body.array) });
 });
 
 module.exports = app;
