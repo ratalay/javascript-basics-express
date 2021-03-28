@@ -12,7 +12,7 @@ const arrayToCSVString = array => {
 };
 
 const csvStringToArray = string => {
-  return string.split(",");
+  return string.split(',');
 };
 
 const addToArray = (element, array) => {
@@ -24,7 +24,8 @@ const addToArray2 = (element, array) => {
 };
 
 const removeNthElement = (index, array) => {
-  return array.splice(index, 1);
+  array.splice(index, 1);
+  return array;
 };
 
 const numbersToStrings = numbers => {
@@ -38,9 +39,9 @@ const uppercaseWordsInArray = strings => {
 const reverseWordsInArray = strings => {
   return strings.map(string =>
     string
-      .split("")
+      .split('')
       .reverse()
-      .join("")
+      .join(''),
   );
 };
 
@@ -53,7 +54,7 @@ const removeNthElement2 = (index, array) => {
 };
 
 const elementsStartingWithAVowel = strings => {
-  const vowels = ["a", "e", "i", "o", "u"];
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
 
   return strings.filter(word => {
     const firstLetter = word[0].toLowerCase();
@@ -62,19 +63,26 @@ const elementsStartingWithAVowel = strings => {
 };
 
 const removeSpaces = string => {
-  return string.split(" ").join("");
+  return string.split(' ').join('');
 };
 
 const sumNumbers = numbers => {
   return numbers.reduce((total, number) => {
-    return total + number
+    return total + number;
   }, 0);
 };
 
 const sortByLastLetter = strings => {
-  const reverseString = (item) => item.split('').reverse().join('');
+  const reverseString = item =>
+    item
+      .split('')
+      .reverse()
+      .join('');
 
-  return strings.map(reverseString).sort().map(reverseString)
+  return strings
+    .map(reverseString)
+    .sort()
+    .map(reverseString);
 };
 
 module.exports = {
@@ -92,5 +100,5 @@ module.exports = {
   elementsStartingWithAVowel,
   removeSpaces,
   sumNumbers,
-  sortByLastLetter
+  sortByLastLetter,
 };

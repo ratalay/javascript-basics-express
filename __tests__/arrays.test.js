@@ -3,7 +3,7 @@ const app = require('../src/app');
 
 describe('/arrays', () => {
   describe('POST /element-at-index/{index}', () => {
-    xit('returns the element at the given index', done => {
+    it('returns the element at the given index', done => {
       request(app)
         .post('/arrays/element-at-index/2')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })
@@ -16,7 +16,7 @@ describe('/arrays', () => {
   });
 
   describe('POST /to-string', () => {
-    xit('returns the stringified array', done => {
+    it('returns the stringified array', done => {
       request(app)
         .post('/arrays/to-string')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })
@@ -29,7 +29,7 @@ describe('/arrays', () => {
   });
 
   describe('POST /append', () => {
-    xit('returns an array with the value appended', done => {
+    it('returns an array with the value appended', done => {
       request(app)
         .post('/arrays/append')
         .send({
@@ -45,7 +45,7 @@ describe('/arrays', () => {
   });
 
   describe('POST /starts-with-vowel', () => {
-    xit('returns a filtered array of elements starting with a vowel', done => {
+    it('returns a filtered array of elements starting with a vowel', done => {
       request(app)
         .post('/arrays/starts-with-vowel')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })
@@ -58,18 +58,19 @@ describe('/arrays', () => {
   });
 
   describe('POST /remove-element?index={index}', () => {
-    xit('returns an array with the first element removed', done => {
+    it('returns an array with the first element removed', done => {
       request(app)
         .post('/arrays/remove-element')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })
         .then(res => {
+          console.log(res.body);
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: ['dog', 'elephant', 'fox'] });
           done();
         });
     });
 
-    xit('returns an array with the element at the given index removed', done => {
+    it('returns an array with the element at the given index removed', done => {
       request(app)
         .post('/arrays/remove-element')
         .send({ array: ['cat', 'dog', 'elephant', 'fox'] })

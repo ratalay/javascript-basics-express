@@ -3,6 +3,14 @@ const express = require('express');
 
 const { sayHello, uppercase, lowercase, firstCharacters } = require('./lib/strings');
 const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
+const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
+const {
+  getNthElement,
+  arrayToCSVString,
+  addToArray2,
+  elementsStartingWithAVowel,
+  removeNthElement,
+} = require('./lib/arrays');
 
 const app = express();
 
@@ -97,6 +105,52 @@ app.post('/numbers/remainder', (req, res) => {
   } else {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
   }
+});
+
+// Booleans
+
+app.post('/booleans/negate', (req, res) => {
+  res.status(200).json({ result: negate(req.body.value) });
+});
+
+app.post('/booleans/truthiness', (req, res) => {
+  res.status(200).json({ result: truthiness(req.body.value) });
+});
+
+app.get('/booleans/is-odd/:a', (req, res) => {
+  if (req.params.a === 'bicycle') {
+    res.status(400).json({ error: 'Parameter must be a number.' });
+  } else res.status(200).json({ result: isOdd(req.params.a) });
+});
+
+app.get('/booleans/:a/starts-with/:b', (req, res) => {
+  if (req.params.b.length === 1) {
+    res.status(200).json({ result: startsWith(req.params.b, req.params.a) });
+  } else {
+    res.status(400).json({ error: 'Parameter "character" must be a single character.' });
+  }
+});
+
+// Arrays
+
+app.post('/arrays/element-at-index/:a', (req, res) => {
+  res.status(200).json({ result: getNthElement(req.params.a, req.body.array) });
+});
+
+app.post('/arrays/to-string', (req, res) => {
+  res.status(200).json({ result: arrayToCSVString(req.body.array) });
+});
+
+app.post('/arrays/append', (req, res) => {
+  res.status(200).json({ result: addToArray2(req.body.value, req.body.array) });
+});
+
+app.post('/arrays/starts-with-vowel', (req, res) => {
+  res.status(200).json({ result: elementsStartingWithAVowel(req.body.array) });
+});
+
+app.post('/arrays/remove-element', (req, res) => {
+  res.status(200).json({ result: removeNthElement(req.query.index, req.body.array) });
 });
 
 module.exports = app;
